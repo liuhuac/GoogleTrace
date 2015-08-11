@@ -17,18 +17,13 @@ do
 		null=""
 	fi
 	if [ $pretable = $table ]; then
-		if [ $isfirstline = true ]; then
-			printf "\n"
-			isfirstline=false
-		else
-			printf ",\n"
-		fi
+		printf ",\n"
 		printf "${content// /_} $format $null"
 	else
 		printf "\n);\n\n"
-		printf "CREATE TABLE $table ("
+		printf "CREATE TABLE $table (\n"
+		printf "${content// /_} $format $null"
 		pretable=$table
-		isfirstline=true
 	fi
 done < $INPUT
 printf "\n);\n\n"
