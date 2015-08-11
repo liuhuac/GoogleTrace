@@ -8,4 +8,6 @@ Populate google trace records in mysql on palmetto
    wget http://dev.mysql.com/get/Downloads/MySQL-5.5/mysql-5.5.8.tar.gz
    cmake .
    make
+4. run gensql.sh to create tables
+   bash gensql.sh | mysql -h [host] -u [uname] -p [database]
 
