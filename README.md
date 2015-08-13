@@ -11,3 +11,4 @@ Populate google trace records in mysql on palmetto
 4. run gensql.sh to create tables
    bash gensql.sh | mysql -h [host] -u [uname] -p [database]
  
+  
