@@ -1,0 +1,311 @@
+module () {  eval `/usr/bin/modulecmd bash $*`
+}
+#!/bin/bash -xv
+
+#PBS -N hadoop-cluster
+#PBS -l select=4:ncpus=1:mem=15gb:interconnect=mx:chip_type=2356,walltime=5:00:00
+#PBS -j oe
+
+cd $PBS_O_WORKDIR
++ cd /home/liuhuac/GoogleTrace
+
+source pbs-interactive.sh
++ source pbs-interactive.sh
+#!/bin/bash
+
+export job_name="GoogleTrace"
+++ export job_name=GoogleTrace
+++ job_name=GoogleTrace
+
+. myHadoop/bin/setenv.sh
+++ . myHadoop/bin/setenv.sh
+#!/bin/bash
+
+# Set this to location of myHadoop 
+export MY_HADOOP_HOME="/home/$USER/GoogleTrace/myHadoop"
++++ export MY_HADOOP_HOME=/home/liuhuac/GoogleTrace/myHadoop
++++ MY_HADOOP_HOME=/home/liuhuac/GoogleTrace/myHadoop
+
+# Set this to the location of the Hadoop installation
+export HADOOP_PREFIX="/home/$USER/Softwares/hadoop-2.6.0"
++++ export HADOOP_PREFIX=/home/liuhuac/Softwares/hadoop-2.6.0
++++ HADOOP_PREFIX=/home/liuhuac/Softwares/hadoop-2.6.0
+export HADOOP_MAPRED_HOME=$HADOOP_PREFIX
++++ export HADOOP_MAPRED_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
++++ HADOOP_MAPRED_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
+export HADOOP_COMMON_HOME=$HADOOP_PREFIX
++++ export HADOOP_COMMON_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
++++ HADOOP_COMMON_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
+export HADOOP_HDFS_HOME=$HADOOP_PREFIX
++++ export HADOOP_HDFS_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
++++ HADOOP_HDFS_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
+export YARN_HOME=$HADOOP_PREFIX
++++ export YARN_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
++++ YARN_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
+export HADOOP_YARN_HOME=$YARN_HOME
++++ export HADOOP_YARN_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
++++ HADOOP_YARN_HOME=/home/liuhuac/Softwares/hadoop-2.6.0
+export HADOOP_COMMON_LIB_NATIVE_DIR="$HADOOP_PREFIX/lib/native"
++++ export HADOOP_COMMON_LIB_NATIVE_DIR=/home/liuhuac/Softwares/hadoop-2.6.0/lib/native
++++ HADOOP_COMMON_LIB_NATIVE_DIR=/home/liuhuac/Softwares/hadoop-2.6.0/lib/native
+export HADOOP_OPTS="-Djava.library.path=$HADOOP_PREFIX/lib"
++++ export HADOOP_OPTS=-Djava.library.path=/home/liuhuac/Softwares/hadoop-2.6.0/lib
++++ HADOOP_OPTS=-Djava.library.path=/home/liuhuac/Softwares/hadoop-2.6.0/lib
+export HADOOP_CONF_DIR="$MY_HADOOP_HOME/config"
++++ export HADOOP_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
++++ HADOOP_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
+export YARN_CONF_DIR=$HADOOP_CONF_DIR
++++ export YARN_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
++++ YARN_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
+
+
+# Set this to the location you want to use for HDFS
+# Note that this path should point to a LOCAL directory, and
+# that the path should exist on all slave nodes
+export HADOOP_DATA_DIR="/tmp/hadoop-$USER/data"
++++ export HADOOP_DATA_DIR=/tmp/hadoop-liuhuac/data
++++ HADOOP_DATA_DIR=/tmp/hadoop-liuhuac/data
+
+# Set this to the location where you want the Hadoop logfies
+export HADOOP_LOG_DIR="/tmp/hadoop-$USER/log"
++++ export HADOOP_LOG_DIR=/tmp/hadoop-liuhuac/log
++++ HADOOP_LOG_DIR=/tmp/hadoop-liuhuac/log
+
+
+#### Set this to the directory where Hadoop configs should be generated
+# Don't change the name of this variable (HADOOP_CONF_DIR) as it is
+# required by Hadoop - all config files will be picked up from here
+#
+# Make sure that this is accessible to all nodes
+export HADOOP_CONF_DIR="$MY_HADOOP_HOME/config"
+++ export HADOOP_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
+++ HADOOP_CONF_DIR=/home/liuhuac/GoogleTrace/myHadoop/config
+
+#### Set up the configuration
+# Make sure number of nodes is the same as what you have requested from PBS
+# usage: $MY_HADOOP_HOME/bin/pbs-configure.sh -h
+echo "Set up the configurations for myHadoop"
+++ echo 'Set up the configurations for myHadoop'
+Set up the configurations for myHadoop
+# this is the non-persistent mode
+$MY_HADOOP_HOME/bin/pbs-configure.sh -n 4 -c $HADOOP_CONF_DIR
+++ /home/liuhuac/GoogleTrace/myHadoop/bin/pbs-configure.sh -n 4 -c /home/liuhuac/GoogleTrace/myHadoop/config
+Number of Hadoop nodes requested: 4
+Generation Hadoop configuration in directory: /home/liuhuac/GoogleTrace/myHadoop/config
+Not persisting HDFS state
+Received 4 nodes from PBS
+Master is: node0537.palmetto.clemson.edu
+Configuring node: node0537.palmetto.clemson.edu
+rm -rf /tmp/hadoop-liuhuac/log; mkdir -p /tmp/hadoop-liuhuac/log
+rm -rf /tmp/hadoop-liuhuac/data; mkdir -p /tmp/hadoop-liuhuac/data
+Configuring node: node0539.palmetto.clemson.edu
+rm -rf /tmp/hadoop-liuhuac/log; mkdir -p /tmp/hadoop-liuhuac/log
+rm -rf /tmp/hadoop-liuhuac/data; mkdir -p /tmp/hadoop-liuhuac/data
+Configuring node: node0540.palmetto.clemson.edu
+rm -rf /tmp/hadoop-liuhuac/log; mkdir -p /tmp/hadoop-liuhuac/log
+rm -rf /tmp/hadoop-liuhuac/data; mkdir -p /tmp/hadoop-liuhuac/data
+Configuring node: node0541.palmetto.clemson.edu
+rm -rf /tmp/hadoop-liuhuac/log; mkdir -p /tmp/hadoop-liuhuac/log
+rm -rf /tmp/hadoop-liuhuac/data; mkdir -p /tmp/hadoop-liuhuac/data
+
+# this is the persistent mode
+# $MY_HADOOP_HOME/bin/pbs-configure.sh -n 4 -c $HADOOP_CONF_DIR -p -d /oasis/cloudstor-group/HDFS
+echo
+++ echo
+
+
+#### Stop the Hadoop cluster
+#        echo "Stop all Hadoop daemons"
+#        $HADOOP_PREFIX/bin/stop-all.sh --config $HADOOP_CONF_DIR
+#        echo
+
+
+#number of iterations and delay
+#### Format HDFS, if this is the first time or not a persistent instance
+echo "Format HDFS"
+++ echo 'Format HDFS'
+Format HDFS
+$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR namenode -format
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop --config /home/liuhuac/GoogleTrace/myHadoop/config namenode -format
+DEPRECATED: Use of this script to execute hdfs command is deprecated.
+Instead use the hdfs command for it.
+
+15/09/14 16:33:30 INFO namenode.NameNode: STARTUP_MSG: 
+/************************************************************
+STARTUP_MSG: Starting NameNode
+STARTUP_MSG:   host = node0537.palmetto.clemson.edu/10.125.3.26
+STARTUP_MSG:   args = [-format]
+STARTUP_MSG:   version = 2.6.0
+STARTUP_MSG:   classpath = /home/liuhuac/GoogleTrace/myHadoop/config:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/hadoop-annotations-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/guava-11.0.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jsr305-1.3.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-cli-1.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-math3-3.1.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/xmlenc-0.52.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-httpclient-3.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-logging-1.1.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-codec-1.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-io-2.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-net-3.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-collections-3.2.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/servlet-api-2.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jetty-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jetty-util-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jersey-core-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jersey-json-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jettison-1.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jaxb-impl-2.2.3-1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jaxb-api-2.2.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/stax-api-1.0-2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/activation-1.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jackson-core-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jackson-mapper-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jackson-jaxrs-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jackson-xc-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jersey-server-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/asm-3.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jasper-compiler-5.5.23.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jasper-runtime-5.5.23.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-el-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jsp-api-2.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/log4j-1.2.17.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jets3t-0.9.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/httpclient-4.2.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/httpcore-4.2.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/java-xmlbuilder-0.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-lang-2.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-configuration-1.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-digester-1.8.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-beanutils-1.7.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-beanutils-core-1.8.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/slf4j-api-1.7.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/slf4j-log4j12-1.7.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/avro-1.7.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/paranamer-2.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/snappy-java-1.0.4.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/commons-compress-1.4.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/xz-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/protobuf-java-2.5.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/gson-2.2.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/hadoop-auth-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/apacheds-kerberos-codec-2.0.0-M15.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/apacheds-i18n-2.0.0-M15.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/api-asn1-api-1.0.0-M20.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/api-util-1.0.0-M20.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/zookeeper-3.4.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/netty-3.6.2.Final.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/curator-framework-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/curator-client-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/jsch-0.1.42.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/curator-recipes-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/htrace-core-3.0.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/junit-4.11.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/hamcrest-core-1.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/lib/mockito-all-1.8.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0-tests.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/common/hadoop-nfs-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-codec-1.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/log4j-1.2.17.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-logging-1.1.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/netty-3.6.2.Final.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/guava-11.0.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jsr305-1.3.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-cli-1.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/xmlenc-0.52.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-io-2.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/servlet-api-2.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jetty-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jetty-util-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jersey-core-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jackson-core-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jackson-mapper-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jersey-server-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/asm-3.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jasper-runtime-5.5.23.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-el-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/jsp-api-2.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-lang-2.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/protobuf-java-2.5.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/htrace-core-3.0.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/commons-daemon-1.0.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/xercesImpl-2.9.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/lib/xml-apis-1.3.04.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/hadoop-hdfs-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/hadoop-hdfs-2.6.0-tests.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/hdfs/hadoop-hdfs-nfs-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-lang-2.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/guava-11.0.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jsr305-1.3.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-logging-1.1.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/protobuf-java-2.5.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-cli-1.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/log4j-1.2.17.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jaxb-api-2.2.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/stax-api-1.0-2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/activation-1.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-compress-1.4.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/xz-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/servlet-api-2.5.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-codec-1.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jetty-util-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-core-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-client-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jackson-core-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jackson-mapper-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jackson-jaxrs-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jackson-xc-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/guice-servlet-3.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/guice-3.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/javax.inject-1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/aopalliance-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-io-2.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-server-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/asm-3.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-json-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jettison-1.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jaxb-impl-2.2.3-1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-guice-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/zookeeper-3.4.6.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jline-0.9.94.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/netty-3.6.2.Final.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/leveldbjni-all-1.8.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-collections-3.2.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/commons-httpclient-3.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/lib/jetty-6.1.26.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-api-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-common-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-common-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-nodemanager-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-web-proxy-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-applicationhistoryservice-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-resourcemanager-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-server-tests-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-client-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-applications-distributedshell-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-applications-unmanaged-am-launcher-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/yarn/hadoop-yarn-registry-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/protobuf-java-2.5.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/avro-1.7.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/jackson-core-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/jackson-mapper-asl-1.9.13.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/paranamer-2.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/snappy-java-1.0.4.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/commons-compress-1.4.1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/xz-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/hadoop-annotations-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/commons-io-2.4.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/jersey-core-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/jersey-server-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/asm-3.2.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/log4j-1.2.17.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/netty-3.6.2.Final.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/guice-3.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/javax.inject-1.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/aopalliance-1.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/jersey-guice-1.9.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/guice-servlet-3.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/junit-4.11.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/hamcrest-core-1.3.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/lib/leveldbjni-all-1.8.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-core-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-common-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-shuffle-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-app-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-plugins-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar:/home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.6.0-tests.jar:/contrib/capacity-scheduler/*.jar:/contrib/capacity-scheduler/*.jar
+STARTUP_MSG:   build = Unknown -r Unknown; compiled by 'liuhuac' on 2015-08-14T02:02Z
+STARTUP_MSG:   java = 1.7.0_79
+************************************************************/
+15/09/14 16:33:30 INFO namenode.NameNode: registered UNIX signal handlers for [TERM, HUP, INT]
+15/09/14 16:33:30 INFO namenode.NameNode: createNameNode [-format]
+15/09/14 16:33:31 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Formatting using clusterid: CID-5faecc36-cdd2-471f-b87b-9b81870c7f26
+15/09/14 16:33:31 INFO namenode.FSNamesystem: No KeyProvider found.
+15/09/14 16:33:31 INFO namenode.FSNamesystem: fsLock is fair:true
+15/09/14 16:33:31 INFO blockmanagement.DatanodeManager: dfs.block.invalidate.limit=1000
+15/09/14 16:33:31 INFO blockmanagement.DatanodeManager: dfs.namenode.datanode.registration.ip-hostname-check=true
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: dfs.namenode.startup.delay.block.deletion.sec is set to 000:00:00:00.000
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: The block deletion will start around 2015 Sep 14 16:33:31
+15/09/14 16:33:31 INFO util.GSet: Computing capacity for map BlocksMap
+15/09/14 16:33:31 INFO util.GSet: VM type       = 64-bit
+15/09/14 16:33:31 INFO util.GSet: 2.0% max memory 889 MB = 17.8 MB
+15/09/14 16:33:31 INFO util.GSet: capacity      = 2^21 = 2097152 entries
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: dfs.block.access.token.enable=false
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: defaultReplication         = 2
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: maxReplication             = 512
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: minReplication             = 1
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: maxReplicationStreams      = 2
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: shouldCheckForEnoughRacks  = false
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: replicationRecheckInterval = 3000
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: encryptDataTransfer        = false
+15/09/14 16:33:31 INFO blockmanagement.BlockManager: maxNumBlocksToLog          = 1000
+15/09/14 16:33:31 INFO namenode.FSNamesystem: fsOwner             = liuhuac (auth:SIMPLE)
+15/09/14 16:33:31 INFO namenode.FSNamesystem: supergroup          = supergroup
+15/09/14 16:33:31 INFO namenode.FSNamesystem: isPermissionEnabled = true
+15/09/14 16:33:31 INFO namenode.FSNamesystem: HA Enabled: false
+15/09/14 16:33:31 INFO namenode.FSNamesystem: Append Enabled: true
+15/09/14 16:33:32 INFO util.GSet: Computing capacity for map INodeMap
+15/09/14 16:33:32 INFO util.GSet: VM type       = 64-bit
+15/09/14 16:33:32 INFO util.GSet: 1.0% max memory 889 MB = 8.9 MB
+15/09/14 16:33:32 INFO util.GSet: capacity      = 2^20 = 1048576 entries
+15/09/14 16:33:32 INFO namenode.NameNode: Caching file names occuring more than 10 times
+15/09/14 16:33:32 INFO util.GSet: Computing capacity for map cachedBlocks
+15/09/14 16:33:32 INFO util.GSet: VM type       = 64-bit
+15/09/14 16:33:32 INFO util.GSet: 0.25% max memory 889 MB = 2.2 MB
+15/09/14 16:33:32 INFO util.GSet: capacity      = 2^18 = 262144 entries
+15/09/14 16:33:32 INFO namenode.FSNamesystem: dfs.namenode.safemode.threshold-pct = 0.9990000128746033
+15/09/14 16:33:32 INFO namenode.FSNamesystem: dfs.namenode.safemode.min.datanodes = 0
+15/09/14 16:33:32 INFO namenode.FSNamesystem: dfs.namenode.safemode.extension     = 30000
+15/09/14 16:33:32 INFO namenode.FSNamesystem: Retry cache on namenode is enabled
+15/09/14 16:33:32 INFO namenode.FSNamesystem: Retry cache will use 0.03 of total heap and retry cache entry expiry time is 600000 millis
+15/09/14 16:33:32 INFO util.GSet: Computing capacity for map NameNodeRetryCache
+15/09/14 16:33:32 INFO util.GSet: VM type       = 64-bit
+15/09/14 16:33:32 INFO util.GSet: 0.029999999329447746% max memory 889 MB = 273.1 KB
+15/09/14 16:33:32 INFO util.GSet: capacity      = 2^15 = 32768 entries
+15/09/14 16:33:32 INFO namenode.NNConf: ACLs enabled? false
+15/09/14 16:33:32 INFO namenode.NNConf: XAttrs enabled? true
+15/09/14 16:33:32 INFO namenode.NNConf: Maximum size of an xattr: 16384
+15/09/14 16:33:32 INFO namenode.FSImage: Allocated new BlockPoolId: BP-1224930595-10.125.3.26-1442262812064
+15/09/14 16:33:32 INFO common.Storage: Storage directory /tmp/hadoop-liuhuac/data/dfs/name has been successfully formatted.
+15/09/14 16:33:32 INFO namenode.NNStorageRetentionManager: Going to retain 1 images with txid >= 0
+15/09/14 16:33:32 INFO util.ExitUtil: Exiting with status 0
+15/09/14 16:33:32 INFO namenode.NameNode: SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down NameNode at node0537.palmetto.clemson.edu/10.125.3.26
+************************************************************/
+echo
+++ echo
+
+#### Start the Hadoop cluster
+echo "Start all Hadoop daemons"
+++ echo 'Start all Hadoop daemons'
+Start all Hadoop daemons
+$HADOOP_PREFIX/sbin/start-all.sh --config $HADOOP_CONF_DIR
+++ /home/liuhuac/Softwares/hadoop-2.6.0/sbin/start-all.sh --config /home/liuhuac/GoogleTrace/myHadoop/config
+This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh
+15/09/14 16:33:34 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Starting namenodes on [node0537.palmetto.clemson.edu]
+node0537.palmetto.clemson.edu: starting namenode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-namenode-node0537.out
+node0537.palmetto.clemson.edu: starting datanode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-datanode-node0537.out
+node0540.palmetto.clemson.edu: starting datanode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-datanode-node0540.out
+node0539.palmetto.clemson.edu: starting datanode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-datanode-node0539.out
+node0541.palmetto.clemson.edu: starting datanode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-datanode-node0541.out
+Starting secondary namenodes [0.0.0.0]
+0.0.0.0: starting secondarynamenode, logging to /tmp/hadoop-liuhuac/log/hadoop-liuhuac-secondarynamenode-node0537.out
+15/09/14 16:33:53 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+starting yarn daemons
+starting resourcemanager, logging to /home/liuhuac/Softwares/hadoop-2.6.0/logs/yarn-liuhuac-resourcemanager-node0537.out
+node0537.palmetto.clemson.edu: starting nodemanager, logging to /home/liuhuac/Softwares/hadoop-2.6.0/logs/yarn-liuhuac-nodemanager-node0537.out
+node0539.palmetto.clemson.edu: starting nodemanager, logging to /home/liuhuac/Softwares/hadoop-2.6.0/logs/yarn-liuhuac-nodemanager-node0539.out
+node0540.palmetto.clemson.edu: starting nodemanager, logging to /home/liuhuac/Softwares/hadoop-2.6.0/logs/yarn-liuhuac-nodemanager-node0540.out
+node0541.palmetto.clemson.edu: starting nodemanager, logging to /home/liuhuac/Softwares/hadoop-2.6.0/logs/yarn-liuhuac-nodemanager-node0541.out
+#$HADOOP_PREFIX/bin/hadoop dfsadmin -safemode leave
+echo
+++ echo
+
+
+#### Run your jobs here
+echo "Run some test Hadoop jobs"
+++ echo 'Run some test Hadoop jobs'
+Run some test Hadoop jobs
+#copy files to HDFS
+	$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR fs -mkdir /user/$USER/Data
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop --config /home/liuhuac/GoogleTrace/myHadoop/config fs -mkdir /user/liuhuac/Data
+15/09/14 16:33:57 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+mkdir: `/user/liuhuac/Data': No such file or directory
+
+
+	$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR fs -copyFromLocal /home/$USER/osk /user/$USER/Data
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop --config /home/liuhuac/GoogleTrace/myHadoop/config fs -copyFromLocal /home/liuhuac/osk /user/liuhuac/Data
+15/09/14 16:34:00 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+copyFromLocal: `/user/liuhuac/Data': No such file or directory
+	$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR fs -lsr /
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop --config /home/liuhuac/GoogleTrace/myHadoop/config fs -lsr /
+lsr: DEPRECATED: Please use 'ls -R' instead.
+15/09/14 16:34:03 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+	echo
+++ echo
+
+
+#run wordcount jobs
+	$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR jar $HADOOP_PREFIX/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/${USER}/Data/ /user/${USER}/Outputs-wordcount
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop --config /home/liuhuac/GoogleTrace/myHadoop/config jar /home/liuhuac/Softwares/hadoop-2.6.0/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /user/liuhuac/Data/ /user/liuhuac/Outputs-wordcount
+15/09/14 16:34:06 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+15/09/14 16:34:08 INFO Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id
+15/09/14 16:34:08 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+15/09/14 16:34:08 INFO mapreduce.JobSubmitter: Cleaning up the staging area file:/tmp/hadoop-liuhuac/data/mapred/staging/liuhuac572389860/.staging/job_local572389860_0001
+org.apache.hadoop.mapreduce.lib.input.InvalidInputException: Input path does not exist: hdfs://node0537.palmetto.clemson.edu:54310/user/liuhuac/Data
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.singleThreadedListStatus(FileInputFormat.java:321)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.listStatus(FileInputFormat.java:264)
+	at org.apache.hadoop.mapreduce.lib.input.FileInputFormat.getSplits(FileInputFormat.java:385)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeNewSplits(JobSubmitter.java:597)
+	at org.apache.hadoop.mapreduce.JobSubmitter.writeSplits(JobSubmitter.java:614)
+	at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:492)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1296)
+	at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1293)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:415)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1628)
+	at org.apache.hadoop.mapreduce.Job.submit(Job.java:1293)
+	at org.apache.hadoop.mapreduce.Job.waitForCompletion(Job.java:1314)
+	at org.apache.hadoop.examples.WordCount.main(WordCount.java:87)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.ProgramDriver$ProgramDescription.invoke(ProgramDriver.java:71)
+	at org.apache.hadoop.util.ProgramDriver.run(ProgramDriver.java:144)
+	at org.apache.hadoop.examples.ExampleDriver.main(ExampleDriver.java:74)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.hadoop.util.RunJar.run(RunJar.java:221)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:136)
+
+#copy hadoop logs to local directory
+	$HADOOP_PREFIX/bin/hadoop fs -copyToLocal /user/${USER}/Outputs-wordcount/* /home/$USER/GoogleTrace/result-inter
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/hadoop fs -copyToLocal '/user/liuhuac/Outputs-wordcount/*' /home/liuhuac/GoogleTrace/result-inter
+15/09/14 16:34:10 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+copyToLocal: `/user/liuhuac/Outputs-wordcount/*': No such file or directory
+#remove all the data
+#	$HADOOP_PREFIX/bin/hadoop fs -rmr /user/${USER}/*
+#	$HADOOP_PREFIX/bin/hadoop --config $HADOOP_CONF_DIR fs -lsr /
+#	echo
+
+#### Stop the Hadoop cluster
+	echo "Stop all Hadoop daemons"
+++ echo 'Stop all Hadoop daemons'
+Stop all Hadoop daemons
+	$HADOOP_PREFIX/bin/stop-all.sh --config $HADOOP_CONF_DIR
+++ /home/liuhuac/Softwares/hadoop-2.6.0/bin/stop-all.sh --config /home/liuhuac/GoogleTrace/myHadoop/config
+pbs-interactive.sh: line 64: /home/liuhuac/Softwares/hadoop-2.6.0/bin/stop-all.sh: No such file or directory
+	echo
+++ echo
+
+
+#### Clean up the working directories after job completion
