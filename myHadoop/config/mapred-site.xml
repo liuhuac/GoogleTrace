@@ -7,7 +7,7 @@
 <!-- DO NOT EDIT - THESE PROPERTIES ARE SET BY THE CONFIGURE SCRIPTS -->
 <property>
   <name>mapred.job.tracker</name>
-  <value>node0535.palmetto.clemson.edu:54311</value>
+  <value>node0519.palmetto.clemson.edu:54311</value>
   <description>The host and port that the MapReduce job tracker runs
   at.  If "local", then jobs are run in-process as a single map
   and reduce task.
